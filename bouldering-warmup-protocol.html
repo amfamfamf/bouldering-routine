@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bouldering Warm-Up Protocol</title>
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+
+    --bg: #faf6f1;
+    --bg-card: #ffffff;
+    --text: #241f1c;
+    --text-soft: #6b615a;
+    --border: #e7ddd2;
+    --accent: #c65d2e;
+    --accent-soft: #f3e2d6;
+    --p0: #7d8f69;
+    --p0-soft: #e9edE0;
+    --p1: #c65d2e;
+    --p1-soft: #f6e4d8;
+    --p2: #a8492f;
+    --p2-soft: #f2ddd4;
+    --p3: #8a3b8f;
+    --p3-soft: #ecdcee;
+    --warn-bg: #fdeeea;
+    --warn-border: #e8b6a4;
+    --warn-text: #7a2f16;
+    --ankle-bg: #fff4e0;
+    --ankle-border: #e8c98c;
+    --ankle-text: #6b4c0e;
+    --pw: #3d5a80;
+    --pw-soft: #e4eaf1;
+    --shadow: 0 1px 3px rgba(36,31,28,0.06), 0 1px 2px rgba(36,31,28,0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17130f;
+      --bg-card: #211b16;
+      --text: #f2ece5;
+      --text-soft: #b3a89d;
+      --border: #362d26;
+      --accent: #e0824f;
+      --accent-soft: #3a2a1f;
+      --p0: #a9c08e;
+      --p0-soft: #2b3323;
+      --p1: #e0824f;
+      --p1-soft: #3a2a1f;
+      --p2: #e0947a;
+      --p2-soft: #3a251f;
+      --p3: #d69ada;
+      --p3-soft: #332235;
+      --warn-bg: #3a241c;
+      --warn-border: #6b3f2c;
+      --warn-text: #f2c4ad;
+      --ankle-bg: #3a2f14;
+      --ankle-border: #6b5620;
+      --ankle-text: #f0d494;
+      --pw: #8fb3e0;
+      --pw-soft: #24344a;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130f;
+    --bg-card: #211b16;
+    --text: #f2ece5;
+    --text-soft: #b3a89d;
+    --border: #362d26;
+    --accent: #e0824f;
+    --accent-soft: #3a2a1f;
+    --p0: #a9c08e;
+    --p0-soft: #2b3323;
+    --p1: #e0824f;
+    --p1-soft: #3a2a1f;
+    --p2: #e0947a;
+    --p2-soft: #3a251f;
+    --p3: #d69ada;
+    --p3-soft: #332235;
+    --warn-bg: #3a241c;
+    --warn-border: #6b3f2c;
+    --warn-text: #f2c4ad;
+    --ankle-bg: #3a2f14;
+    --ankle-border: #6b5620;
+    --ankle-text: #f0d494;
+    --pw: #8fb3e0;
+    --pw-soft: #24344a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  header.top { margin-bottom: 20px; }
+  header.top .kicker {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  header.top h1 { font-size: 28px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  header.top p.sub {
+    color: var(--text-soft);
+    margin: 0;
+    font-size: 15px;
+    max-width: 58ch;
+  }
+
+  /* Controls */
+  .controls {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 16px 18px;
+    margin: 20px 0 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 28px;
+    align-items: center;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 7px; }
+  .control-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-soft);
+  }
+  .segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .segmented button {
+    border: none;
+    background: transparent;
+    color: var(--text-soft);
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .segmented button.active {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .switch-row { display: flex; align-items: center; gap: 10px; }
+  .switch {
+    position: relative;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .switch-track {
+    position: absolute;
+    inset: 0;
+    background: var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .switch-track::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  }
+  .switch input:checked + .switch-track { background: #d99a3f; }
+  .switch input:checked + .switch-track::after { transform: translateX(18px); }
+  .switch-label-text { font-size: 13.5px; font-weight: 600; }
+
+  .summary-line {
+    margin: 0 0 22px;
+    font-size: 13.5px;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .summary-line strong { color: var(--text); }
+  .summary-line .time-badge {
+    background: var(--p0-soft);
+    color: var(--p0);
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12.5px;
+  }
+
+  .variant-table, .ladder-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 16px 18px;
+    margin: 0 0 20px;
+    overflow-x: auto;
+  }
+  .variant-table h2, .ladder-card h2 {
+    font-size: 15px; margin: 0 0 12px; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .ladder-tag {
+    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .ladder-56, .ladder-34 { display: none; }
+  body.session-power .ladder-56, body.session-lactic .ladder-56 { display: block; }
+  body.session-aerobic .ladder-34, body.session-lead .ladder-34 { display: block; }
+  .pl-ladder-time, .al-ladder-time { display: none; }
+  body.session-power .pl-ladder-time, body.session-lactic .pl-ladder-time { display: inline; }
+  body.session-aerobic .al-ladder-time, body.session-lead .al-ladder-time { display: inline; }
+
+  .main-power, .main-lactic, .main-aerobic, .main-lead { display: none; }
+  body.session-power .main-power { display: block; }
+  body.session-lactic .main-lactic { display: block; }
+  body.session-aerobic .main-aerobic { display: block; }
+  body.session-lead .main-lead { display: block; }
+
+  .phase-body h3 { font-size: 14.5px; margin: 4px 0 8px; letter-spacing: -0.01em; }
+  .phase-body h3 .sub-tag {
+    font-size: 11px; font-weight: 600; color: var(--text-soft);
+    text-transform: none; letter-spacing: normal;
+  }
+  .phase-body ul { margin: 0 0 12px; padding-left: 20px; font-size: 13.5px; color: var(--text); }
+  .phase-body ul li { margin-bottom: 7px; }
+  .phase-body ul li::marker { color: var(--pw); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 460px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--text-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+  tr:last-child td { border-bottom: none; }
+  td.yes { color: var(--p0); font-weight: 600; }
+  td.no { color: var(--text-soft); }
+
+  .callout {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    color: var(--warn-text);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 0 0 28px;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+  }
+  .callout .icon { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+  .callout strong { display: block; margin-bottom: 2px; }
+
+  .phase {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .phase-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  details.phase summary.phase-head {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  details.phase summary.phase-head::-webkit-details-marker { display: none; }
+  details.phase summary.phase-head::after {
+    content: "▸";
+    margin-left: auto;
+    color: var(--text-soft);
+    font-size: 13px;
+    transition: transform 0.15s;
+  }
+  details.phase[open] summary.phase-head::after { transform: rotate(90deg); }
+  .phase-num {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .p0 .phase-num { background: var(--p0-soft); color: var(--p0); }
+  .p1 .phase-num { background: var(--p1-soft); color: var(--p1); }
+  .p2 .phase-num { background: var(--p2-soft); color: var(--p2); }
+  .p3 .phase-num { background: var(--p3-soft); color: var(--p3); }
+  .pw .phase-num { background: var(--pw-soft); color: var(--pw); font-size: 17px; }
+
+  .phase-title { flex: 1; min-width: 0; }
+  .phase-title h2 { font-size: 16.5px; margin: 0 0 2px; letter-spacing: -0.01em; }
+  .phase-title .time { font-size: 12.5px; color: var(--text-soft); }
+
+  .phase-badge {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 9px; border-radius: 999px;
+    white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .p0 .phase-badge { background: var(--p0-soft); color: var(--p0); }
+  .p1 .phase-badge { background: var(--p1-soft); color: var(--p1); }
+  .p2 .phase-badge { background: var(--p2-soft); color: var(--p2); }
+  .p3 .phase-badge { background: var(--p3-soft); color: var(--p3); }
+  .pw .phase-badge { background: var(--pw-soft); color: var(--pw); }
+
+  .phase-body { padding: 6px 18px 16px; }
+
+  .item {
+    display: flex; align-items: flex-start; gap: 11px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .item:last-child { border-bottom: none; }
+
+  .item input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0; margin-top: 1px; cursor: pointer;
+    position: relative; background: var(--bg);
+  }
+  .item input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+  .item input[type="checkbox"]:checked::after {
+    content: ""; position: absolute; left: 6px; top: 2px;
+    width: 5px; height: 10px;
+    border: solid white; border-width: 0 2px 2px 0;
+    transform: rotate(40deg);
+  }
+  .item label { flex: 1; cursor: pointer; }
+  .item .move { font-size: 14.5px; font-weight: 600; margin-bottom: 2px; }
+  .item .detail { font-size: 13px; color: var(--text-soft); }
+  .item .move-line { font-size: 14px; font-weight: 500; }
+  .item.checked .move, .item.checked .detail { text-decoration: line-through; opacity: 0.5; }
+
+  /* ankle-mode text swap */
+  .detail-ankle { display: none; }
+  body.ankle-on .detail-normal { display: none; }
+  body.ankle-on .detail-ankle { display: block; }
+  .move-ankle { display: none; }
+  body.ankle-on .move-normal { display: none; }
+  body.ankle-on .move-ankle { display: block; }
+  body.ankle-on .ankle-affected { background: var(--ankle-bg); border-radius: 8px; margin: 0 -8px; padding: 8px; }
+
+  /* session type show/hide */
+  body:not(.session-power) #phase2, body:not(.session-power) #phase3 { display: none; }
+  body.session-cardio #phase0, body.session-cardio #phase1 { display: none; }
+  body.session-cardio #mainWorkout, body.session-cardio #postSessionClimbing { display: none; }
+  .cardio-only { display: none; }
+  body.session-cardio .cardio-only { display: block; }
+  .cardio-skip-note { display: none; }
+  body.session-cardio .cardio-skip-note { display: flex; }
+
+  .ankle-hint { display: none; font-size: 12px; color: var(--ankle-text); margin-left: 2px; }
+  body.session-aerobic .ankle-hint { display: inline; }
+
+  .variant-table tr.selected-row td { background: var(--accent-soft); }
+
+  /* ankle note visibility */
+  .ankle-note { display: none; }
+  body.ankle-on .ankle-note { display: flex; }
+
+  .note {
+    font-size: 13px; color: var(--text-soft);
+    background: var(--accent-soft);
+    border-radius: 10px; padding: 10px 13px; margin: 10px 0 4px;
+  }
+  .note strong { color: var(--text); }
+
+  .note.ankle-note {
+    background: var(--ankle-bg);
+    border: 1px solid var(--ankle-border);
+    color: var(--ankle-text);
+    gap: 8px;
+  }
+  .note.ankle-note strong { color: var(--ankle-text); }
+
+  .active-rest {
+    border: 1.5px dashed var(--border);
+    border-radius: 12px;
+    padding: 12px 14px 4px;
+    margin: 14px 0 8px;
+    background: var(--bg);
+  }
+  .active-rest .arb-title {
+    font-size: 11.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--accent);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .active-rest .arb-sub {
+    font-size: 12.5px; color: var(--text-soft);
+    margin-bottom: 8px;
+  }
+
+  .divider-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-soft); font-weight: 600; margin: 14px 0 6px;
+  }
+
+  footer {
+    margin-top: 36px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px; color: var(--text-soft);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .reset-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-soft);
+    border-radius: 8px; padding: 5px 12px; font-size: 12.5px; cursor: pointer;
+  }
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 420px) {
+    header.top h1 { font-size: 24px; }
+    .wrap { padding: 20px 14px 50px; }
+    .controls { padding: 14px; gap: 14px 20px; }
+  }
+</style>
+</head>
+<body class="session-power ankle-on">
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Pre-Session Protocol</div>
+    <h1>Bouldering Warm-Up</h1>
+    <p class="sub">Quick joint prep → pump-based finger warm-up → neural recruitment → PAP primer. Lower-body mobility is folded into your rest windows below instead of front-loaded — same work, less standing around.</p>
+  </header>
+
+  <div class="controls">
+    <div class="control-group">
+      <div class="control-label">Session type</div>
+      <div class="segmented" role="tablist" aria-label="Session type">
+        <button id="btnPower" title="Alactic / Power &amp; Coordination" onclick="setSessionType('power')">Power</button>
+        <button id="btnLead" title="Lead Climbing" onclick="setSessionType('lead')">Lead</button>
+        <button id="btnCardio" title="Cardio — Zone 2" onclick="setSessionType('cardio')">Cardio</button>
+        <button id="btnLactic" title="Lactic / Boulder Volume" onclick="setSessionType('lactic')">Lactic</button>
+        <button id="btnAerobic" title="Aerobic / Capacity &amp; Slab" onclick="setSessionType('aerobic')">Aerobic / Slab</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="control-label">Mode</div>
+      <div class="switch-row">
+        <label class="switch">
+          <input type="checkbox" id="ankleToggle" checked onchange="setAnkle(this.checked)">
+          <span class="switch-track"></span>
+        </label>
+        <span class="switch-label-text">Ankle-Aware</span><span class="ankle-hint">↳ recommended for slab</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="summary-line" id="summaryLine"></p>
+
+  
+  <div class="phase pw cardio-only" id="cardioSession">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Cardio — Zone 2</h2>
+        <div class="time">~83 min total (~60 min bike + ~23 min post-ride work)</div>
+      </div>
+      <div class="phase-badge">Zone 2</div>
+    </div>
+    <div class="phase-body">
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Bike — 60 min, Zone 2 / conversational pace</div>
+          <div class="detail">Steady effort, nasal breathing or hold-a-conversation pace. This is the main stimulus for the week's lipid-focused volume target.</div>
+        </div>
+      </div>
+
+      <div class="divider-label">Post-ride work</div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Single-leg balance (eyes closed / unstable surface) — 3 x 60 sec</div>
+          <div class="detail">Proprioception work like this is a standard piece of late-stage return-to-sport ankle rehab — good fit for where you're at post-injury.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Step-down / drop-and-stick — 3 x 8 per leg, low box or step</div>
+          <div class="detail">Trains the landing mechanics that actually matter for dismounts and falls — land soft, stick it, no wobble before resetting.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Hanging windshield wipers — 3 x 8</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Weighted hollow body hold — 4 x 20 sec @ 20</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">4-way resistance bands — 2–3 x 15</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Calf raises — 2–3 x 12–15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 0 -->
+  <div class="phase p0" id="phase0">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Quick Joint Prep</h2>
+        <div class="time">~4 min · before you touch the wall hard</div>
+      </div>
+      <div class="phase-badge">Everyone</div>
+    </div>
+    <div class="phase-body">
+        <div class="item">
+        <div class="item-content">
+          <div class="move">Wrist circles</div>
+          <div class="detail">10 each direction, both wrists</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Wrist flexor/extensor stretch</div>
+          <div class="detail">15 sec each position, each arm — gentle, no bounce</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Finger extensions / rubber band opens</div>
+          <div class="detail">2×15 — antagonist prep, ties into your prehab work</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Cat-cow / thoracic rotations</div>
+          <div class="detail">10 reps — opens t-spine for reaching and twisting positions</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Arm circles</div>
+          <div class="detail">15 sec forward, 15 sec backward — light, not held</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase p1" id="phase1">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Pump Ladder</h2>
+        <div class="time"><span class="pl-ladder-time">~23 min</span><span class="al-ladder-time">~9 min</span> · scales with session type</div>
+      </div>
+      <div class="phase-badge">Everyone</div>
+    </div>
+    <div class="phase-body">
+      <div class="ladder-card ladder-56">
+        <h2>Ladder — target 5/10 pump <span class="ladder-tag">Power &amp; Lactic</span></h2>
+        <table>
+          <tr><th>Boulders</th><th>Grade</th><th>Rest before next</th></tr>
+          <tr><td>2</td><td>V0–V1 (juggy, vertical)</td><td>1 min</td></tr>
+          <tr><td>1</td><td>V2 (incut edges / buckets)</td><td>2 min</td></tr>
+          <tr><td>1</td><td>V3 (moderate edges)</td><td>2 min</td></tr>
+          <tr><td>1</td><td>V4 (smaller edges, light overhang)</td><td>3 min</td></tr>
+          <tr><td>1</td><td>V4–V5 (steep/technical — 1–2 grades below your max)</td><td><strong>10 min fixed</strong></td></tr>
+        </table>
+      </div>
+
+      <div class="ladder-card ladder-34">
+        <h2>Ladder — target 2–4/10 pump <span class="ladder-tag">Aerobic, Slab &amp; Lead</span></h2>
+        <table>
+          <tr><th>Boulders</th><th>Grade</th><th>Rest before next</th></tr>
+          <tr><td>2</td><td>V0–V1 (jugs)</td><td>1 min</td></tr>
+          <tr><td>1–2</td><td>V1–V2 (easy edges / footwork focus)</td><td>~4 min, then start your session</td></tr>
+        </table>
+        <div class="note">Only 3–4 boulders needed — you're not building real pump on these days, just enough blood flow to climb clean. Stop as soon as you're in range; pushing higher works against an easy day.</div>
+      </div>
+
+
+      <div class="active-rest">
+        <div class="arb-title">Active rest — use the gaps between rounds for:</div>
+        <div class="item ankle-affected">
+          <div class="item-content">
+            <div class="move-line move-normal">Leg swings, front/back &amp; side/side — 10 per leg each direction</div>
+            <div class="move-line move-ankle">Leg swings, front/back &amp; side/side — 5 per leg, small range, hold wall</div>
+          </div>
+        </div>
+        <div class="item ankle-affected">
+          <div class="item-content">
+            <div class="move-line move-normal">90/90 hip switches — 8 per side</div>
+            <div class="move-line move-ankle">90/90 hip switches — 8 per side, seated</div>
+          </div>
+        </div>
+        <div class="item ankle-affected">
+          <div class="item-content">
+            <div class="move-line move-normal">Walking lunges — 8–10 per leg, bodyweight</div>
+            <div class="move-line move-ankle">Static split-squat holds instead (no forward step), or skip</div>
+          </div>
+        </div>
+        <div class="item ankle-affected">
+          <div class="item-content">
+            <div class="move-line move-normal">Lateral lunges — 6–8 per side</div>
+            <div class="move-line move-ankle">Skip — high lateral ankle stress</div>
+          </div>
+        </div>
+        <div class="item ankle-affected">
+          <div class="item-content">
+            <div class="move-line move-normal">Ankle circles + dorsiflexion rocks — 10 each direction, both ankles</div>
+            <div class="move-line move-ankle">Ankle circles + dorsiflexion rocks — 15 each direction, very gentle</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            <div class="move-line">Band pull-aparts / external rotations — 2×12–15, light</div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <details class="phase p2" id="phase2">
+    <summary class="phase-head">
+      <div class="phase-title">
+        <h2>Neural Recruitment</h2>
+        <div class="time">~13 min · power/coordination days only</div>
+      </div>
+      <div class="phase-badge">Ramp up at V6</div>
+    </summary>
+    <div class="phase-body">
+      
+      <div class="item ankle-affected">
+        <div class="item-content">
+          <div class="move move-normal">Max hangs or limit boulder moves — 3–5 sec efforts</div>
+          <div class="move move-ankle">Max hangs — 3–5 sec efforts</div>
+          <div class="detail">Actively curl into the edge / squeeze the holds hard. Not passive hanging. Add weight if bodyweight feels too easy to fully recruit.</div>
+        </div>
+      </div>
+
+      <div class="active-rest">
+        <div class="arb-title">Active rest — use the 3–5 min gaps for:</div>
+        <div class="item ankle-affected">
+          <div class="item-content">
+            <div class="move-line move-normal">Light leg swings + ankle circles — 5 per leg, easy range</div>
+            <div class="move-line move-ankle">Light leg swings + ankle circles — 3–5 per leg, minimal range</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-content">
+          <div class="move">1–3 reps total, no more</div>
+          <div class="detail">Recruitment is spent, not gained, during a session — this is priming, not training volume.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">One wall move: powerful throw or lock-off you know you'll stick</div>
+          <div class="detail">Grab two holds, squeeze maximally, lock down the whole body through the chain — not just fingers.</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- PHASE 3 -->
+  <details class="phase p3" id="phase3">
+    <summary class="phase-head">
+      <div class="phase-title">
+        <h2>PAP Primer</h2>
+        <div class="time">~5 min · power/coordination days only</div>
+      </div>
+      <div class="phase-badge">Ramp up at V6</div>
+    </summary>
+    <div class="phase-body">
+            <div class="item">
+        <div class="item-content">
+          <div class="move">Bar/edge explosive pulls</div>
+          <div class="detail">Pull with ~10–20% effort, then whip up as fast as possible. Speed matters, not height.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">3 reps, ~3 sec rest between</div>
+          <div class="detail">Keep it short and sharp — this primes rate of force development, it's not a strength set.</div>
+        </div>
+      </div>
+      <div class="note"><strong>Straight into the session after this.</strong> You're now primed for a snatchy, powerful limit boulder or your hardest project attempt of the day.</div>
+    </div>
+  </details>
+
+  <!-- MAIN WORKOUT -->
+  <div class="phase pw" id="mainWorkout">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Main Workout</h2>
+        <div class="time">After the warm-up — what to actually climb, for the selected session type</div>
+      </div>
+      <div class="phase-badge">Session-specific</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="main-power">
+        <h3>Limit bouldering / coordination — technique-first at your current grade</h3>
+        <ul>
+          <li><strong>3–6 problems</strong> at or near today's session max (same reference point as your Phase 1 ladder — shift with your actual daily max, not a fixed V6).</li>
+          <li><strong>Before each attempt:</strong> call your beta out loud — footwork sequence, hip position (flag or backstep), where you'll pause vs. move continuously. At V5, the limiter is usually precision and positioning, not force — treat each try as a technique rep that happens to be hard, not a power rep.</li>
+          <li><strong>1–2 attempts per problem</strong>, full recovery between every single try: rest <strong>3–5 min</strong> regardless of success or failure.</li>
+          <li>On steep terrain specifically: prioritize problems that force a static, controlled position over a problem's crux rather than ones solved by a single dynamic move — that's the gap you're training.</li>
+          <li>Stop the session once <strong>2 consecutive attempts</strong> feel noticeably worse than earlier ones — that's neural fatigue outrunning recovery. Pushing past this trains sloppy movement, not power.</li>
+          <li>Total hard tries: <strong>6–10</strong>, done. This is a quality day, not a volume day.</li>
+        </ul>
+      </div>
+
+      <div class="main-lactic">
+        <h3>4x4s — boulder lactic capacity</h3>
+        <table>
+          <tr><th>Round</th><th>Work</th><th>Rest between boulders</th><th>Rest before next round</th></tr>
+          <tr><td>1</td><td>Same 4 boulders, back-to-back</td><td>~20–30 sec</td><td>3–4 min</td></tr>
+          <tr><td>2</td><td>Repeat the same 4</td><td>~20–30 sec</td><td>3–4 min</td></tr>
+          <tr><td>3</td><td>Repeat the same 4</td><td>~20–30 sec</td><td>3–4 min</td></tr>
+          <tr><td>4</td><td>Repeat the same 4</td><td>~20–30 sec</td><td>done</td></tr>
+        </table>
+        <ul>
+          <li>Pick 4 boulders roughly <strong>2–3 grades below max</strong> (e.g. V3–V4 off a V6 session max) — easy enough that the limiter is capacity, not difficulty.</li>
+          <li>Use the <strong>same 4 boulders every round</strong> — familiarity keeps the focus on output, not puzzle-solving.</li>
+          <li>Total volume: 16 boulder-completions, ~20–25 min main set.</li>
+          <li>RPE should be genuinely uncomfortable by round 3–4. If round 4 still feels easy, the boulders were too easy — go up a grade next time.</li>
+        </ul>
+      </div>
+
+      <div class="main-aerobic">
+        <h3>Pick one — <span class="sub-tag">given your current V4 plateau, default to Option B most weeks</span></h3>
+        <ul>
+          <li><strong>Option A — ARC (capacity):</strong> 20–30+ min continuous easy climbing (auto belay, top-rope laps, or easy circuits). Stay under ~3–4/10 pump the whole time — if you're breathing hard or gripping tight, back off the terrain. Builds aerobic base, not skill.</li>
+          <li><strong>Option B — Technique / slab drilling (recommended right now):</strong> problems 1–2 grades below max, slab or vertical terrain, with one constraint — <strong>zero dynamic moves</strong>. Find the static, controlled version of every move. Place feet precisely with no re-adjusting once weighted. Use flagging/backstepping to keep hips over your base instead of squaring up and muscling through. Repeat each problem 2–3 times for clean execution, not speed.</li>
+        </ul>
+        <div class="note">This is exactly the fix for what you flagged: relying on dynamism was masking footwork and static-position gaps. Steep terrain let you cheat around it; slab and controlled climbing won't. Option B is where that gets rebuilt.</div>
+      </div>
+
+      <div class="main-lead">
+        <h3>Lead climbing — sustained pump &amp; route-reading</h3>
+        <ul>
+          <li><strong>One easy lead or top-rope lap first</strong> — well below your pump ladder's working grade, pure movement rehearsal. This isn't for finger priming (the ladder already did that on boulders); it's to re-acclimate to clipping, rope weight, and positioning before you're on a route that actually matters.</li>
+          <li><strong>3–5 routes</strong> at a grade that produces steady, climbable pump — hard enough to demand real forearm management, not so hard you're falling from pure difficulty.</li>
+          <li><strong>Read the route from the ground first</strong> where possible — plan rest positions and clip stances before you leave the ground, not mid-route when you're already pumping.</li>
+          <li><strong>On-sight or flash attempts</strong> count double for this stimulus — redpointing a known route trains memory and efficiency, but on-sight route-reading under pump is the harder skill you're after.</li>
+          <li>Prioritize routes with <strong>sustained steep sections</strong> over routes that are just one hard crux move — that's the same steep-wall endurance gap the Lactic 4x4s are built around.</li>
+          <li>Shake out deliberately at any no-hands or low-grip rest — this is a skill, not wasted time, and it's exactly what separates good lead climbers from strong boulderers on routes.</li>
+          <li>Total volume: <strong>3–5 routes</strong>, done. Stop once footwork and clipping start getting sloppy from fatigue — that's the same "neural fatigue" cutoff as your other sessions, just route-shaped.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- POST-SESSION ACCESSORY WORK (CLIMBING DAYS) -->
+  <div class="phase pw" id="postSessionClimbing">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Post-Session Accessory Work</h2>
+        <div class="time">After climbing — Power / Lead / Aerobic / Slab days</div>
+      </div>
+      <div class="phase-badge">Accessory</div>
+    </div>
+    <div class="phase-body">
+<div class="item">
+        <div class="item-content">
+          <div class="move">Seated EZ-bar Curl — 3 x 12 @ 40</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Reverse Wrist Curls — 3 x 15 @ 12.5, slow 3–4 sec lowering phase</div>
+          <div class="detail">Wrist extensor work, eccentric-focused — this is what drives tendon adaptation for lateral elbow health, not just rep count.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          <div class="move">Wrist Flexor Curls — 3 x 15 @ 12.5</div>
+          <div class="detail">Palms-up version of the reverse wrist curl — balances the medial elbow, which takes more stress from crimping specifically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- WEEKLY SCHEDULE -->
+  <div class="phase pw" id="weeklySchedule">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Weekly Schedule</h2>
+        <div class="time">Steep-wall bouldering progress + zone 2 for lipid improvement</div>
+      </div>
+      <div class="phase-badge">New goal</div>
+    </div>
+    <div class="phase-body">
+            <table>
+        <tr><th>Day</th><th>Session</th><th>Focus</th></tr>
+        <tr><td>Mon</td><td><strong>Power</strong> — bouldering</td><td>Steep-wall limit bouldering, full warm-up + Phase 2/3</td></tr>
+        <tr><td>Tue</td><td>Zone 2 — run or bike</td><td>30–45 min continuous, conversational pace / nasal breathing</td></tr>
+        <tr><td>Wed</td><td><strong>Lead</strong> climbing</td><td>Sustained pump &amp; route-reading, replaces Lactic bouldering</td></tr>
+        <tr><td>Thu</td><td>Zone 2 — run or bike</td><td>30–45 min continuous</td></tr>
+        <tr><td>Fri</td><td><strong>Power</strong> — bouldering</td><td>Steep-wall limit bouldering</td></tr>
+        <tr><td>Sat</td><td>Zone 2 (longer) + optional Aerobic/Slab climbing</td><td>45–60 min Zone 2, or split: 30 min Zone 2 + easy technique climbing</td></tr>
+        <tr><td>Sun</td><td>Rest or light Zone 2</td><td>Full rest, or an easy 20–30 min walk/spin if feeling good</td></tr>
+      </table>
+
+      <ul>
+        <li><strong>Zone 2 target:</strong> 3–4 sessions/week, 30–45 min each (~150+ min/week total) — this is the volume threshold most associated with HDL/triglyceride improvement, more than any single long session.</li>
+        <li><strong>Intensity cue:</strong> conversational pace — you should be able to hold a conversation without gasping. If you don't have HR zones dialed in yet, "could keep going for an hour" is a good gut-check that you're not drifting into Zone 3.</li>
+        <li><strong>Placement logic:</strong> Zone 2 sits on the days between Power/Lactic sessions — low intensity enough not to interfere with tendon recovery, and it uses the recovery day productively instead of being fully sedentary.</li>
+        <li><strong>Steep-wall focus:</strong> on Power and Lead days, bias route/boulder selection toward overhanging terrain specifically — that's the goal, so make sure session content reflects it rather than defaulting to whatever's set at your gym.</li>
+        <li><strong>Flex day:</strong> Saturday is the easiest day to compress or skip if the week gets busy — it's additive volume, not a day the other sessions depend on.</li>
+      </ul>
+
+          </div>
+  </div>
+
+  <!-- APPENDIX -->
+  <div class="phase pw" id="appendix">
+    <div class="phase-head">
+      <div class="phase-title">
+        <h2>Appendix</h2>
+        <div class="time">Reference</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="variant-table">
+        <h2>Which phases for which session?</h2>
+        <table>
+          <tr>
+            <th>Session type</th>
+            <th>Phase 0<br>Quick Prep</th>
+            <th>Phase 1<br>Pump Ladder</th>
+            <th>Phase 2<br>Neural Recruitment</th>
+            <th>Phase 3<br>PAP</th>
+          </tr>
+          <tr id="row-power">
+            <td>Alactic / Power &amp; Coordination</td>
+            <td class="yes">✓</td>
+            <td class="yes">✓ to 5–6/10</td>
+            <td class="yes">✓ Full</td>
+            <td class="yes">✓ Full</td>
+          </tr>
+          <tr id="row-lactic">
+            <td>Lactic / Boulder Volume</td>
+            <td class="yes">✓</td>
+            <td class="yes">✓ to 5–6/10</td>
+            <td class="no">Skip</td>
+            <td class="no">Skip</td>
+          </tr>
+          <tr id="row-aerobic">
+            <td>Aerobic / Capacity &amp; Slab</td>
+            <td class="yes">✓ extra ankle focus on slab days</td>
+            <td class="yes">to 2–4/10</td>
+            <td class="no">Skip</td>
+            <td class="no">Skip</td>
+          </tr>
+          <tr id="row-lead">
+            <td>Lead Climbing</td>
+            <td class="yes">✓</td>
+            <td class="yes">to 2–4/10</td>
+            <td class="no">Skip</td>
+            <td class="no">Skip</td>
+          </tr>
+          <tr id="row-cardio">
+            <td>Cardio — Zone 2</td>
+            <td class="no">Skip — no finger loading</td>
+            <td class="no">Skip — this isn't a pump ladder day</td>
+            <td class="no">Skip</td>
+            <td class="no">Skip</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Adapted from elite pump-control/recruitment/PAP protocol + standard joint prep · pair with your existing connective-tissue prehab routine</span>
+  </footer>
+
+</div>
+<script>
+  var STORAGE_KEY_SESSION = 'warmupSessionType';
+  var STORAGE_KEY_ANKLE = 'warmupAnkleOn';
+
+  var SESSION_INFO = {
+    power:   { label: 'Alactic / Power &amp; Coordination', time: '~105 min total (~45 warm-up + ~45 main + ~15 accessory)' },
+    lead:    { label: 'Lead Climbing',                       time: '~90 min total (~15 warm-up + ~60 main + ~15 accessory)' },
+    cardio:  { label: 'Cardio — Zone 2',                     time: '~83 min total (~60 min bike + ~23 min post-ride work)' },
+    lactic:  { label: 'Lactic / Boulder Volume',             time: '~70 min total (~25 warm-up + ~30 main + ~15 accessory)' },
+    aerobic: { label: 'Aerobic / Capacity &amp; Slab',       time: '~60 min total (~15 warm-up + ~30 main + ~15 accessory)' }
+  };
+
+  function readStored(key, fallback) {
+    try {
+      var v = window.localStorage.getItem(key);
+      return v === null ? fallback : v;
+    } catch (e) { return fallback; }
+  }
+  function writeStored(key, value) {
+    try { window.localStorage.setItem(key, value); } catch (e) {}
+  }
+
+  var state = {
+    sessionType: readStored(STORAGE_KEY_SESSION, 'power'),
+    ankle: readStored(STORAGE_KEY_ANKLE, 'on') === 'on'
+  };
+  if (state.sessionType === 'slab') { state.sessionType = 'aerobic'; } // legacy value from before the merge
+  if (!SESSION_INFO[state.sessionType]) { state.sessionType = 'power'; }
+
+  function setSessionType(t) {
+    state.sessionType = t;
+    writeStored(STORAGE_KEY_SESSION, t);
+    render();
+  }
+  function setAnkle(on) {
+    state.ankle = !!on;
+    writeStored(STORAGE_KEY_ANKLE, on ? 'on' : 'off');
+    render();
+  }
+
+  function render() {
+    var body = document.body;
+    ['power', 'lead', 'cardio', 'lactic', 'aerobic'].forEach(function (t) {
+      var isActive = state.sessionType === t;
+      body.classList.toggle('session-' + t, isActive);
+      var btn = document.getElementById('btn' + t.charAt(0).toUpperCase() + t.slice(1));
+      if (btn) btn.classList.toggle('active', isActive);
+      var row = document.getElementById('row-' + t);
+      if (row) row.classList.toggle('selected-row', isActive);
+    });
+    body.classList.toggle('ankle-on', state.ankle);
+    body.classList.toggle('ankle-off', !state.ankle);
+    document.getElementById('ankleToggle').checked = state.ankle;
+
+    var info = SESSION_INFO[state.sessionType];
+    var ankleText = state.ankle ? ' · Ankle-Aware on' : '';
+    document.getElementById('summaryLine').innerHTML =
+      'Showing: <strong>' + info.label + '</strong>' + ankleText +
+      ' <span class="time-badge">' + info.time + '</span>';
+  }
+
+  render();
+</script>
+</body>
+</html>
